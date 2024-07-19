@@ -39,19 +39,20 @@ export const saveNote = () => {
     const { uid } = getState().user;
 
     const { active: note } = getState().journal;
-    const ref = doc(db, `${uid}/journal/notes/${note.id}`);
-    try {
-      await setDoc(ref, note);
-      dispatch(setSaving());
-      dispatch(setActiveNote(note));
-      dispatch(loadNotes());
-      toast("todo perfecto");
-    } catch {
-      toast("algo fallo");
+    if (note) {
+      const ref = doc(db, `${uid}/journal/notes/${note.id}`);
+      try {
+        await setDoc(ref, note);
+        dispatch(setSaving());
+        dispatch(setActiveNote(note));
+        dispatch(loadNotes());
+        toast("todo perfecto");
+      } catch {
+        toast("algo fallo");
+      }
     }
   };
 };
-
 export const loadNotes = () => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     const { uid } = getState().user;

@@ -3,10 +3,10 @@ import { firebaseAuth } from "../../apis";
 
 type response = {
   ok: boolean;
-  errorMessage?: string | null;
-  uid?: string | null;
-  photoURL?: string | null;
-  displayName?: string | null;
+  errorMessage?: string;
+  uid?: string;
+  photoURL?: string;
+  displayName?: string;
 };
 
 type props = {
@@ -24,15 +24,17 @@ export const emailConect: emailConect = async ({ email, password }) => {
       password
     );
     const { uid, photoURL, displayName } = resp.user;
+
     return {
       ok: true,
       uid,
-      photoURL,
-      displayName,
+      photoURL: photoURL ?? undefined,
+      displayName: displayName ?? undefined,
     };
   } catch (error) {
     const firebaseError = error as AuthError;
-    const errorMessage = firebaseError.message || "An error occurred";
+    const errorMessage = firebaseError.message || "Ocurrió un error";
+
     return {
       ok: false,
       errorMessage,

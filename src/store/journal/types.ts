@@ -10,7 +10,7 @@ export type JournalState = {
   isSaving: boolean; // saving state
   messageSaved: string; // message saved
   notes: Note[]; // array of notes
-  active: Note | null; // active note
+  active: Note; // active note
 };
 
 export type NotePayload = {
