@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useInput } from "../../auth";
-import { useAppSelector } from "../../store";
+import { setActiveNote, useAppDispatch, useAppSelector } from "../../store";
 import { dateToString } from "../helpers/dateToString";
 
 export const useNoteView = () => {
@@ -22,6 +22,19 @@ export const useNoteView = () => {
     console.log("reset");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active?.id]);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(
+      setActiveNote({
+        id: active?.id || "",
+        date: active?.date || 0,
+        body: values.content.value || "",
+        title: values.title.value || "",
+      })
+    );
+  }, [active?.id, active?.date, dispatch, values]);
 
   const formattedDate = dateToString(active?.date || 0);
 
