@@ -5,7 +5,7 @@ const initialState: JournalState = {
   isSaving: false,
   messageSaved: "",
   notes: [],
-  active: undefined,
+  active: null,
 };
 
 const journalReducer = createSlice({
