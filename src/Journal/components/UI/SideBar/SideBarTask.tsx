@@ -5,7 +5,6 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import { Delete } from "@mui/icons-material";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { Note, setActiveNote, useAppDispatch } from "../../../../store";
 
