@@ -32,9 +32,10 @@ export const useNoteView = () => {
         date: active?.date || 0,
         body: values.content.value || "",
         title: values.title.value || "",
+        imageUrls: active?.imageUrls || [],
       })
     );
-  }, [active?.id, active?.date, dispatch, values]);
+  }, [active?.id, active?.date, dispatch, values, active?.imageUrls]);
 
   const formattedDate = dateToString(active?.date || 0);
 

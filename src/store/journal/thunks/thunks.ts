@@ -1,7 +1,15 @@
 import { Note } from "../types";
-import { doc, setDoc, collection, addDoc, getDocs } from "firebase/firestore";
+import {
+  doc,
+  deleteDoc,
+  setDoc,
+  collection,
+  addDoc,
+  getDocs,
+} from "firebase/firestore";
 import {
   addNewEmptyNote,
+  deleteNoteById,
   setActiveNote,
   setNotes,
   setSaving,
@@ -9,6 +17,7 @@ import {
 import { AppDispatch, RootState } from "../../store";
 import { toast } from "../../../Journal/helpers/toast";
 import { db } from "../../../apis";
+import { multipleUploadCloudinary } from "../../../apis/cloudinary/helper/feetch";
 
 export const startNewNote = () => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
@@ -40,9 +49,10 @@ export const saveNote = () => {
 
     const { active: note } = getState().journal;
     if (note) {
+      console.log(note);
       const ref = doc(db, `${uid}/journal/notes/${note.id}`);
       try {
-        await setDoc(ref, note);
+        await setDoc(ref, note, { merge: true });
         dispatch(setSaving());
         dispatch(setActiveNote(note));
         dispatch(loadNotes());
@@ -66,5 +76,43 @@ export const loadNotes = () => {
       };
     });
     dispatch(setNotes(notes));
+  };
+};
+
+export const uploadImages = (files: File[]) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    dispatch(setSaving());
+    const { active } = getState().journal;
+
+    const response = await multipleUploadCloudinary(files);
+    console.log(response);
+
+    const note = { ...active };
+    console.log(note.imageUrls);
+
+    if (!note.imageUrls) {
+      note.imageUrls = [];
+    }
+    toast("todo perfecto, guarda la nota");
+    note.imageUrls = [...note.imageUrls, ...response];
+    dispatch(setActiveNote(note));
+  };
+};
+
+export const deleteNoteByIdOnFS = () => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    const { uid } = getState().user;
+    const { active } = getState().journal;
+    dispatch(setSaving());
+    try {
+      const ref = doc(db, `${uid}/journal/notes/${active?.id}`);
+      await deleteDoc(ref);
+      dispatch(deleteNoteById(active?.id));
+      toast("Nota eliminada");
+      dispatch(setActiveNote(null));
+    } catch (error) {
+      console.log(error);
+      toast("algo fallo");
+    }
   };
 };

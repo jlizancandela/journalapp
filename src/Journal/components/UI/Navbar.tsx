@@ -3,7 +3,12 @@ import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import { logoutUserThunk, useAppDispatch, UserState } from "../../../store";
+import {
+  clearNotesLogout,
+  logoutUserThunk,
+  useAppDispatch,
+  UserState,
+} from "../../../store";
 
 export const Navbar = ({ drawerWidth }: { drawerWidth: number }) => {
   const dispatch = useAppDispatch();
@@ -15,7 +20,7 @@ export const Navbar = ({ drawerWidth }: { drawerWidth: number }) => {
 
   const handleLogout = () => {
     dispatch(logoutUserThunk());
-
+    dispatch(clearNotesLogout());
     navigate("/auth/", { replace: true });
   };
 

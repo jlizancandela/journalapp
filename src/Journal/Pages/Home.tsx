@@ -5,5 +5,5 @@ import { NothingView } from "../views/Nothing";
 export const HomePage = () => {
   const { active } = useAppSelector((state) => state.journal);
 
-  return active?.id !== undefined ? <NoteView /> : <NothingView />;
+  return active ? <NoteView /> : <NothingView />;
 };

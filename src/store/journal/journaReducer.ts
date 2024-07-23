@@ -30,14 +30,22 @@ const journalReducer = createSlice({
     setSaving: (state) => {
       state.isSaving = true;
     },
-
-    updateNote: (state, action) => {
+    setImageUrl: (state, action) => {
+      if (!state.active) return;
+      state.active.imageUrls = action.payload;
       state.isSaving = false;
-      state.active!.title = action.payload.title;
-      state.active!.body = action.payload.body;
     },
+
     deleteNoteById: (state, action) => {
       state.notes = state.notes.filter((note) => note.id !== action.payload);
+      state.isSaving = false;
+    },
+
+    clearNotesLogout: (state) => {
+      state.isSaving = false;
+      state.messageSaved = "";
+      state.notes = [];
+      state.active = null;
     },
   },
 });
@@ -48,6 +56,6 @@ export const {
   setActiveNote,
   setNotes,
   setSaving,
-  updateNote,
   deleteNoteById,
+  clearNotesLogout,
 } = journalReducer.actions;

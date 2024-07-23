@@ -42,14 +42,14 @@ export const SideBar = ({ drawerWidth }: { drawerWidth: number }) => {
       </Toolbar>
       <Divider />
       <List>
-        {notes.map(({ title, id, body, date }) => (
+        {notes.map(({ title, id, body, date, imageUrls }) => (
           <SideBarTask
             id={id}
             title={title}
             body={body}
             key={id}
             date={date}
-            imageUrls={[]}
+            imageUrls={imageUrls}
           />
         ))}
       </List>

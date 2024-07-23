@@ -5,10 +5,11 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
+import { Delete } from "@mui/icons-material";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { Note, setActiveNote, useAppDispatch } from "../../../../store";
 
-export const SideBarTask = ({ title, date, body, id }: Note) => {
+export const SideBarTask = ({ title, date, body, id, imageUrls }: Note) => {
   const dispatch = useAppDispatch();
 
   const shortTitle = title.length > 10 ? title.substring(0, 10) + "..." : title;
@@ -16,7 +17,7 @@ export const SideBarTask = ({ title, date, body, id }: Note) => {
   const shortBody = body.length > 15 ? body.substring(0, 15) + "..." : body;
 
   const onClick = () => {
-    dispatch(setActiveNote({ id, date, body, title }));
+    dispatch(setActiveNote({ id, date, body, title, imageUrls }));
   };
 
   return (
