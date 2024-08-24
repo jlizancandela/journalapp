@@ -7,6 +7,7 @@ export const loginUserThunk =
   async (dispatch: AppDispatch) => {
     dispatch(checkUser());
     const data = await emailConect({ email, password });
+    console.log(data);
     dispatch(
       setUser({
         name: data.displayName ?? "",
