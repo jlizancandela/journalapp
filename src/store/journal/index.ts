@@ -1,4 +1,3 @@
-export * from './hooks/hooks';
-export * from './journaReducer';
-export * from './thunks/thunks';
-export * from './types';
+export * from "./journaReducer";
+export * from "./thunks/thunks";
+export * from "./types";
