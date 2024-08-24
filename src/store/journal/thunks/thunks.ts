@@ -22,7 +22,7 @@ import { multipleUploadCloudinary } from "../../../apis/cloudinary/helper/feetch
 export const startNewNote = () => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     const { uid } = getState().user;
-
+    console.log("startNewNote");
     dispatch(setSaving());
 
     const newNote: Note = {
@@ -49,7 +49,6 @@ export const saveNote = () => {
 
     const { active: note } = getState().journal;
     if (note) {
-      console.log(note);
       const ref = doc(db, `${uid}/journal/notes/${note.id}`);
       try {
         await setDoc(ref, note, { merge: true });
@@ -85,10 +84,8 @@ export const uploadImages = (files: File[]) => {
     const { active } = getState().journal;
 
     const response = await multipleUploadCloudinary(files);
-    console.log(response);
 
     const note = { ...active };
-    console.log(note.imageUrls);
 
     if (!note.imageUrls) {
       note.imageUrls = [];

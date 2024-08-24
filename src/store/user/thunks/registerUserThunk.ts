@@ -14,7 +14,9 @@ export const registerUserThunk =
   }) =>
   async (dispatch: AppDispatch) => {
     dispatch(checkUser());
+
     const data = await emailRegister(email, password, name);
+    console.log(email, password, name);
     if (data) {
       const { ok, photoURL, uid } = data;
 

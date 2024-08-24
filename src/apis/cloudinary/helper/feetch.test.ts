@@ -1,20 +1,17 @@
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test } from "vitest";
 import { uploadCloudinary } from "./feetch";
-
-vi.mock("./feetch", () => ({
-  uploadCloudinary: vi.fn(),
-}));
+import "../mocks/setuptest";
 
 describe("feetch", () => {
   test("should upload cloudinary", async () => {
-    const mockresult = "https://example.com/example.png";
-
-    vi.mocked(uploadCloudinary).mockResolvedValue(mockresult);
-
     const file = new File(["dummy content"], "example.png", {
       type: "image/png",
     });
+    const urlExample =
+      "https://res.cloudinary.com/demo/image/upload/example.png";
     const result = await uploadCloudinary(file);
-    expect(result).toBe(mockresult);
+    expect(result).toStrictEqual({
+      secure_url: urlExample,
+    });
   }, 20000);
 });

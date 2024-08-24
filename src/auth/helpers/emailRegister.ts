@@ -10,30 +10,32 @@ export const emailRegister = async (
   password: string,
   name: string
 ) => {
-  if (firebaseAuth.currentUser) {
-    try {
-      const resp = await createUserWithEmailAndPassword(
-        firebaseAuth,
-        email,
-        password
-      );
-      const { uid, photoURL } = resp.user;
+  try {
+    // Crear un nuevo usuario con correo y contraseña
+    const resp = await createUserWithEmailAndPassword(
+      firebaseAuth,
+      email,
+      password
+    );
 
-      await updateProfile(firebaseAuth.currentUser, { displayName: name });
-      return {
-        ok: true,
-        uid,
-        photoURL,
-        email,
-        displayname: name,
-      };
-    } catch (error) {
-      const firebaseError = error as AuthError;
-      const errorMessage = firebaseError.message || "An error occurred";
-      return {
-        ok: false,
-        errorMessage,
-      };
-    }
+    const { uid, photoURL } = resp.user;
+
+    // Actualizar el perfil del usuario recién creado con el nombre proporcionado
+    await updateProfile(resp.user, { displayName: name });
+
+    return {
+      ok: true,
+      uid,
+      photoURL,
+      email,
+      displayname: name,
+    };
+  } catch (error) {
+    const firebaseError = error as AuthError;
+    const errorMessage = firebaseError.message || "An error occurred";
+    return {
+      ok: false,
+      errorMessage,
+    };
   }
 };

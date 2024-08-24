@@ -5,7 +5,6 @@ import { setUser, checkUser } from "../userReducer";
 export const getGoogleThunk = () => async (dispatch: AppDispatch) => {
   dispatch(checkUser());
   const data = await googleConect();
-
   dispatch(
     setUser({
       name: data.displayName ? data.displayName : "",

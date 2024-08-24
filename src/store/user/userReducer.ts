@@ -9,7 +9,7 @@ export interface UserState {
   uid: string;
 }
 
-interface UserPayload {
+export interface UserPayload {
   name: string;
   email: string;
   status: "connected" | "disconnected" | "checking";
@@ -51,9 +51,12 @@ const userReducer = createSlice({
       state.photoUrl = "";
       state.uid = "";
     },
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
   },
 });
 
 export default userReducer.reducer;
 
-export const { checkUser, setUser, logoutUser } = userReducer.actions;
+export const { checkUser, setUser, logoutUser, setError } = userReducer.actions;

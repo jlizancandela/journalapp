@@ -11,11 +11,10 @@ export const loginUserThunk =
       setUser({
         name: data.displayName ?? "",
         email: email,
-        status: "connected",
-        error: "",
+        status: data.errorMessage ? "disconnected" : "connected",
+        error: data.errorMessage ?? "",
         photoUrl: data.photoURL ?? "",
         uid: data.uid ?? "",
       })
     );
-    console.log("loginUserThunk", data);
   };

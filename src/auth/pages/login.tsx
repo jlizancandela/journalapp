@@ -29,7 +29,6 @@ export const LoginPage = () => {
         password: values.password.value,
       })
     );
-    console.log(values.email.value, values.password.value);
     reset();
   };
 
@@ -75,7 +74,12 @@ export const LoginPage = () => {
             />
           </Grid>
           <Grid item xs={6}>
-            <Button onClick={handleLogin} variant="contained" fullWidth>
+            <Button
+              onClick={handleLogin}
+              variant="contained"
+              fullWidth
+              aria-label="loginButton"
+            >
               Login
             </Button>
           </Grid>
@@ -86,6 +90,7 @@ export const LoginPage = () => {
               fullWidth
               sx={{ gap: 1 }}
               onClick={handleGoogle}
+              aria-label="google"
             >
               <Google />
               Google

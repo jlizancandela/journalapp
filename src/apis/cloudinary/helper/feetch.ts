@@ -5,12 +5,10 @@ export const uploadCloudinary = async (file: File) => {
   const formData = new FormData();
   formData.append("file", file);
   formData.append("upload_preset", uploadPreset);
-  console.log(url, uploadPreset);
   const response = await fetch(url, {
     method: "POST",
     body: formData,
   });
-  console.log("response", response);
   const data = await response.json();
   return data;
 };
